@@ -19,6 +19,7 @@ public class RecursiveQuickSort {
 
     //recursive, parallel part (calls itself recursively -> split left right sub-arrays into parallel tasks)
     private static void quicksort(int[] array, int low, int high) {
+
         if(low < high){
             int k = partition(array, low, high);
 

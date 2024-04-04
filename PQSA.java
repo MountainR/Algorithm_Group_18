@@ -1,3 +1,5 @@
+import java.util.concurrent.ForkJoinPool;
+
 /**
  * Author: Zhao Tong(zhao.tong@ucdconnect.ie)
  * This code is incomplete 
@@ -10,17 +12,16 @@ public class PQSA {
     public static int[] sort(int[] dataset, int threadCount) {
         int[] array = dataset.clone();
 
-        //--------------------------------------------------------------------------------
-        // Code segment of creating threads
-        //--------------------------------------------------------------------------------
+        //Create new ForkJoinPool pool with specified number of CPU cores (threadCount)
+        ForkJoinPool pool = new ForkJoinPool(threadCount);
 
         // Start timing
         long startTime = System.nanoTime();
 
-        // Call the recursive quicksort function which will manage threads
-        RecursiveQuickSort.quicksort(array, 0, array.length - 1);
+        // Invoke initial RecursiveQuickSortTask from target pool
+        pool.invoke(new RecursiveQuickSortTask(array));
 
-        //--------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------
         // Code segment of parallel process needs to be added:
         // this part is for waiting all threads to finish their current work.
         //--------------------------------------------------------------------------------

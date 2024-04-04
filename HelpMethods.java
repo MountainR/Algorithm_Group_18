@@ -12,6 +12,7 @@ public class HelpMethods {
         int[] dataset = new int[length];
 
         Random random = new Random();
+        random.setSeed(12348);
 
         for (int i = 0; i < length; i++) {
             dataset[i] = random.nextInt(20001) - 10000;
