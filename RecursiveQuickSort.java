@@ -3,9 +3,8 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
- * Description : Recursive Quick Sort for PQSA (INCOMPLETE - SEE BELOW)
+ * Description : Recursive Quick Sort for PQSA (EXAMPLE WITHOUT PARALLEL, SEE RECURSIVE QUICK SORT TASK)
  * -> base recursive quick sort (complete)
- * -> called quick sort tasks need to run in parallel !!! (not done)
  */
 public class RecursiveQuickSort {
 
