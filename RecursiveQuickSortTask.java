@@ -6,23 +6,29 @@ import java.util.concurrent.RecursiveAction;
  */
 
 public class RecursiveQuickSortTask extends RecursiveAction {
+    // RecursiveAction is in concurrent
 
     final int[] arr;
     int low;
     int high;
-    private final int THRESHOLD = 10;
+    private final int THRESHOLD = 10;   // if the size is less than THRESHOLD, do not create new thread
 
     public RecursiveQuickSortTask(int[] arr, int low, int high) {
         this.arr = arr;
         this.low = low;
         this.high = high;
     }
+    // only give an array
     public RecursiveQuickSortTask(int[] arr){this(arr, 0, arr.length-1);}
 
+    /**
+     * quick sort in thread
+     */
     @Override
     protected void compute() {
         if(low < high) {
             int k = partition(arr, low, high);
+            // check the size with threshold
             if (high - low < THRESHOLD) {
                 quicksort(arr, low, k - 1);
                 quicksort(arr, low, k + 1);
@@ -34,6 +40,12 @@ public class RecursiveQuickSortTask extends RecursiveAction {
         }
     }
 
+    /**
+     * quick sort when size < threshold
+     * @param arr
+     * @param low
+     * @param high
+     */
     private static void quicksort(int[] arr, int low, int high) {
         if (low < high) {
             int k = partition(arr, low, high);
@@ -43,6 +55,14 @@ public class RecursiveQuickSortTask extends RecursiveAction {
         }
     }
 
+
+    /**
+     * helper method for quick sort
+     * @param arr
+     * @param low
+     * @param high
+     * @return
+     */
         private static int partition(int[] arr, int low, int high) {
         Random rand = new Random();
         int k = rand.nextInt(low, high+1); //randomly select pivot
