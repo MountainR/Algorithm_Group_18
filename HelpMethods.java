@@ -21,6 +21,12 @@ public class HelpMethods {
         return dataset;
     }
 
+    /**
+     * check the sorted array by its length, order and occurrence of each char
+     * @param originalArray original
+     * @param sortedArray sorted
+     * @return true or false
+     */
     public static boolean verifyCorrectness(int[] originalArray, int[] sortedArray) {
         // Check if both arrays have the same length
         if (originalArray.length != sortedArray.length) {

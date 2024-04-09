@@ -20,7 +20,7 @@ public class MSQSA {
         int[] array = dataset.clone();
         int length = array.length;
         int interval = (int) Math.ceil((double) length / threadCount);
-        Thread[] threads = new Thread[threadCount];
+        Thread[] threads = new Thread[threadCount]; // create threads
 
         // Start timing
         long startTime = System.nanoTime();
@@ -29,6 +29,7 @@ public class MSQSA {
         for (int i = 0; i < threadCount; i++) {
             int start = i * interval;
             int end = (i == threadCount - 1) ? length - 1 : (i + 1) * interval - 1;
+            // assign tasks to threads
             threads[i] = new Thread(() -> NonRecursiveQuickSort.sort(array, start, end));
             threads[i].start();
         }

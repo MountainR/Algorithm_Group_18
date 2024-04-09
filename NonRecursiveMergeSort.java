@@ -73,13 +73,33 @@ public class NonRecursiveMergeSort {
         System.out.println(Arrays.toString(arr)); // print 2
         */
 
-        int[] array_1 = {1, 3, 5, 2, 4, 6};
-        merge(array_1, 0, 3, 5);
-        System.out.println(Arrays.toString(array_1));
+//        int[] array_1 = {1, 3, 5, 2, 4, 6};
+//        merge(array_1, 0, 3, 5);
+//        System.out.println(Arrays.toString(array_1));
+//
+//        int[] array_2 = {0};
+//        merge(array_2, 0, 0, 0);
+//        System.out.println(Arrays.toString(array_2));
+        int[] array_1 = {1, 2, 3, 4, 5, 1, 2, 7, 8, 9};
+        //        merge(array_1, 0, 3, 5);
+        int length = array_1.length;
+        int threadCount = 3; // The number of threads
+        int interval = length / threadCount; // The number of integers in each subarray
 
-        int[] array_2 = {0};
-        merge(array_2, 0, 0, 0);
-        System.out.println(Arrays.toString(array_2));
+        int j = 0;
+        while (interval < length) {
+            while (j + interval < length){
+//                int end = j + 2 * interval > threadCount ? threadCount - 1: j + 2 * interval - 1;
+                // warning: j + 2 * interval - 1 may > length
+                int end = j + 2 * interval > length ? length - 1: j + 2 * interval - 1;
+                NonRecursiveMergeSort.merge(array_1, j, j + interval, end);
+                j += 2 * interval;
+            }
+            j = 0;
+            interval *= 2;
+        }
+
+        System.out.println(Arrays.toString(array_1));
 
 
     }
