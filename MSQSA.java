@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -15,12 +16,31 @@ import java.util.Arrays;
  */
 
 public class MSQSA {
+    private static int threadCount;
 
-    public static int[] sort(int[] dataset, int threadCount) {
+    public static ArrayList<Double> sort(int threads) {
+        threadCount = threads;
+
+        ArrayList<Double> time = new ArrayList<>();
+
+        System.out.println("--------------------Thread count: " + threadCount + "--------------------");
+
+        int[] dataset1 = HelpMethods.generateDataset(1000000);
+        int[] dataset2 = HelpMethods.generateDataset(2000000);
+        int[] dataset3 = HelpMethods.generateDataset(5000000);
+
+        time.add(msqsaSort(dataset1));
+        time.add(msqsaSort(dataset2));
+        time.add(msqsaSort(dataset3));
+
+        return time;
+    }
+
+    public static double msqsaSort(int[] dataset) {
         int[] array = dataset.clone();
         int length = array.length;
         int interval = (int) Math.ceil((double) length / threadCount);
-        Thread[] threads = new Thread[threadCount]; // create threads
+        Thread[] threads = new Thread[threadCount];
 
         // Start timing
         long startTime = System.nanoTime();
@@ -29,7 +49,6 @@ public class MSQSA {
         for (int i = 0; i < threadCount; i++) {
             int start = i * interval;
             int end = (i == threadCount - 1) ? length - 1 : (i + 1) * interval - 1;
-            // assign tasks to threads
             threads[i] = new Thread(() -> NonRecursiveQuickSort.sort(array, start, end));
             threads[i].start();
         }
@@ -42,10 +61,6 @@ public class MSQSA {
                 throw new RuntimeException(e);
             }
         }
-
-//        long quicksortTime = System.nanoTime();
-//        System.out.println("Quick sort Time: " + ((quicksortTime - startTime) / 1e9) + " seconds");
-
 
         // Now merge the sorted subarrays
         int j = 0;
@@ -61,14 +76,14 @@ public class MSQSA {
 
         // End timing
         long endTime = System.nanoTime();
-//        System.out.println("Merge Time: " + ((endTime - quicksortTime) / 1e9) + " seconds");
-        System.out.println("Thread count is " + threadCount + ",  MSQSA Sorting Time: " + ((endTime - startTime) / 1e9) + " seconds");
+        double time = (endTime - startTime) / 1e9;
+        System.out.println("Dataset number: " + dataset.length + "\nMSQSA Sorting Time: " + time + " seconds");
 
         if (HelpMethods.verifyCorrectness(dataset, array)) {
             System.out.println("Correctly sorting\n");
         } else {
             System.out.println("Incorrectly sorting\n");
         }
-        return array;
+        return time;
     }
 }
