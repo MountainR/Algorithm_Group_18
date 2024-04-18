@@ -11,7 +11,7 @@ public class RecursiveQuickSortTask extends RecursiveAction {
     final int[] arr;
     int low;
     int high;
-    private final int THRESHOLD = 10;   // if the size is less than THRESHOLD, do not create new thread
+    private static final int THRESHOLD = 10;   // if the size is less than THRESHOLD, do not create new thread
 
     public RecursiveQuickSortTask(int[] arr, int low, int high) {
         this.arr = arr;
