@@ -4,7 +4,7 @@ Author: ZHAO TONG
 
 import java.util.Random;
 
-public class Main {
+public class TestMSQSA {
     private static int[] dataset1, dataset2, dataset3;
     public static void main(String[] args) {
 
