@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -16,11 +17,13 @@ import java.util.Arrays;
 
 public class MSQSA {
 
-    public static int[] sort(int[] dataset, int threadCount) {
+
+    public static int[] sort(int datasetSize, int threadCount) {
+        int[] dataset = HelpMethods.generateDataset(datasetSize);
         int[] array = dataset.clone();
         int length = array.length;
         int interval = (int) Math.ceil((double) length / threadCount);
-        Thread[] threads = new Thread[threadCount]; // create threads
+        Thread[] threads = new Thread[threadCount];
 
         // Start timing
         long startTime = System.nanoTime();
@@ -29,7 +32,6 @@ public class MSQSA {
         for (int i = 0; i < threadCount; i++) {
             int start = i * interval;
             int end = (i == threadCount - 1) ? length - 1 : (i + 1) * interval - 1;
-            // assign tasks to threads
             threads[i] = new Thread(() -> NonRecursiveQuickSort.sort(array, start, end));
             threads[i].start();
         }
@@ -42,10 +44,6 @@ public class MSQSA {
                 throw new RuntimeException(e);
             }
         }
-
-//        long quicksortTime = System.nanoTime();
-//        System.out.println("Quick sort Time: " + ((quicksortTime - startTime) / 1e9) + " seconds");
-
 
         // Now merge the sorted subarrays
         int j = 0;
@@ -61,8 +59,8 @@ public class MSQSA {
 
         // End timing
         long endTime = System.nanoTime();
-//        System.out.println("Merge Time: " + ((endTime - quicksortTime) / 1e9) + " seconds");
-        System.out.println("Thread count is " + threadCount + ",  MSQSA Sorting Time: " + ((endTime - startTime) / 1e9) + " seconds");
+        double time = (endTime - startTime) / 1e9;
+        System.out.println("Thread count is " + threadCount + ", PQSA Sorting Time: " + ((endTime - startTime) / 1e9) + " seconds");
 
         if (HelpMethods.verifyCorrectness(dataset, array)) {
             System.out.println("Correctly sorting\n");
