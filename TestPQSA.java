@@ -2,12 +2,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestPQSA {
-    private static int[] dataset1, dataset2, dataset3;
+    private static int dataset1, dataset2, dataset3;
     @BeforeEach
     public void prepare(){
-        dataset1 = HelpMethods.generateDataset(1000000);
-        dataset2 = HelpMethods.generateDataset(2000000);
-        dataset3 = HelpMethods.generateDataset(5000000);
+        dataset1 = 1000000;
+        dataset2 = 2000000;
+        dataset3 = 5000000;
     }
     @Test
     public void testDataSet1(){
