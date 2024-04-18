@@ -60,7 +60,7 @@ public class MSQSA {
         // End timing
         long endTime = System.nanoTime();
         double time = (endTime - startTime) / 1e9;
-        System.out.println("Thread count is " + threadCount + ", PQSA Sorting Time: " + ((endTime - startTime) / 1e9) + " seconds");
+        System.out.println("Thread count is " + threadCount + ", MSQSA Sorting Time: " + ((endTime - startTime) / 1e9) + " seconds");
 
         if (HelpMethods.verifyCorrectness(dataset, array)) {
             System.out.println("Correctly sorting\n");
