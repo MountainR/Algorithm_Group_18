@@ -16,27 +16,10 @@ import java.util.Arrays;
  */
 
 public class MSQSA {
-    private static int threadCount;
 
-    public static ArrayList<Double> sort(int threads) {
-        threadCount = threads;
 
-        ArrayList<Double> time = new ArrayList<>();
-
-        System.out.println("--------------------Thread count: " + threadCount + "--------------------");
-
-        int[] dataset1 = HelpMethods.generateDataset(1000000);
-        int[] dataset2 = HelpMethods.generateDataset(2000000);
-        int[] dataset3 = HelpMethods.generateDataset(5000000);
-
-        time.add(msqsaSort(dataset1));
-        time.add(msqsaSort(dataset2));
-        time.add(msqsaSort(dataset3));
-
-        return time;
-    }
-
-    public static double msqsaSort(int[] dataset) {
+    public static int[] sort(int datasetSize, int threadCount) {
+        int[] dataset = HelpMethods.generateDataset(datasetSize);
         int[] array = dataset.clone();
         int length = array.length;
         int interval = (int) Math.ceil((double) length / threadCount);
@@ -77,13 +60,13 @@ public class MSQSA {
         // End timing
         long endTime = System.nanoTime();
         double time = (endTime - startTime) / 1e9;
-        System.out.println("Dataset number: " + dataset.length + "\nMSQSA Sorting Time: " + time + " seconds");
+        System.out.println("Thread count is " + threadCount + ", PQSA Sorting Time: " + ((endTime - startTime) / 1e9) + " seconds");
 
         if (HelpMethods.verifyCorrectness(dataset, array)) {
             System.out.println("Correctly sorting\n");
         } else {
             System.out.println("Incorrectly sorting\n");
         }
-        return time;
+        return array;
     }
 }
